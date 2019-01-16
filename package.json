@@ -1,0 +1,46 @@
+{
+  "name": "vue-electron-typescript-quickstart",
+  "description": "A boilerplate of Electron app that uses Vue in TypeScript.",
+  "keywords": [
+    "Vue.js", "Electron", "TypeScript", "JavaScript", "boilerplate", "quickstart", "template"
+  ],
+  "version": "0.1.0",
+  "private": false,
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir -c electron-builder.yml",
+    "dist": "electron-builder -c electron-builder.yml",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "build:mainproc": "webpack-cli --mode=development --config webpack.mainproc.config.js",
+    "clean": "rm -rf ./dist && rm -rf ./bin && rm -rf ./dist.electron",
+    "lint": "vue-cli-service lint",
+    "test": "npm run test:unit",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "vue": "^2.5.21",
+    "vue-class-component": "^6.0.0",
+    "vue-property-decorator": "^7.0.0",
+    "vue-router": "^3.0.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.0",
+    "@types/electron": "^1.6.10",
+    "@types/mocha": "^5.2.4",
+    "@vue/cli-plugin-babel": "^3.3.0",
+    "@vue/cli-plugin-typescript": "^3.3.0",
+    "@vue/cli-plugin-unit-mocha": "^3.3.0",
+    "@vue/cli-service": "^3.3.0",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "chai": "^4.1.2",
+    "electron": "^4.0.1",
+    "electron-builder": "^20.38.4",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "source-map-loader": "^0.2.4",
+    "typescript": "^3.0.0",
+    "vue-template-compiler": "^2.5.21",
+    "webpack-cli": "^3.2.1"
+  }
+}

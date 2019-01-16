@@ -1,0 +1,49 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "module": "esnext",
+        "strict": true,
+        "jsx": "react",
+        "jsxFactory": "FooBar.dom",
+        "importHelpers": true,
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true,
+
+        "noEmitOnError": true,
+        "noImplicitAny": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "strictNullChecks": true,
+        // "noUnusedParameters": true,
+        // "noUnusedLocals": true,
+        // "noFallthroughCasesInSwitch": true,
+
+        "baseUrl": ".",
+        "types": ["node", "electron"],
+        "paths": {
+        },
+        "lib": [
+          "esnext",
+          "scripthost"
+        ],
+        // "declaration": true,
+        // "declarationDir": "./declarations",
+        // "traceResolution": true,
+    },
+    "include": [
+        "src.mainproc/**/*"
+    ],
+    "exclude": [
+        "bin",
+        "node_modules",
+        "spec",
+        "src",
+        "public",
+        "tests"
+    ]
+}
