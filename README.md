@@ -6,7 +6,7 @@ This is based on the output of Vue CLI 3 and is not ejecting from the CLI.
 
 ## Usage
 ```
-git clone shellyln/vue-electron-typescript-quickstart
+git clone https://github.com/shellyln/vue-electron-typescript-quickstart.git
 cd vue-electron-typescript-quickstart
 
 vi package.json
