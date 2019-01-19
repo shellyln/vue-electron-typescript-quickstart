@@ -34,6 +34,20 @@ export function createSubWindow() {
         });
     });
 
+    subWindow.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
+        // const url = webContents.getURL();
+        //
+        // if (permission === 'notifications') {
+        //     // Approves the permissions request
+        //     callback(true);
+        // }
+        // if (!url.startsWith('https://my-website.com')) {
+        //     // Denies the permissions request
+        //     return callback(false);
+        // }
+        return callback(false);
+    });
+
     // Open the DevTools.
     // subWindow.webContents.openDevTools()
 
