@@ -1,24 +1,25 @@
 
 // Modules to control application life and create native browser window
-import * as fs from 'fs';
 import * as url from 'url';
 import * as path from 'path';
 import { app, protocol } from 'electron';
-import { createMainWindow } from './windows/MainWindow';
 
+
+// Window
+
+import { appConfig } from './lib/conf';
+import { createMainWindow } from './windows/MainWindow';
 
 
 // IPC events
 
-// tslint:disable-next-line:no-var-requires
-require('./ipc/app');
-// tslint:disable-next-line:no-var-requires
-require('./ipc/views.Home');
+import './ipc/app';
+import './ipc/views.Home';
 
 
 // Read the application config.
 // tslint:disable-next-line:no-console
-console.log('app config: ' + fs.readFileSync(path.join(app.getAppPath(), 'config/app-config.json')).toString());
+console.log('app config: ' + JSON.stringify(appConfig, null, 2));
 
 
 // App lifecycle events.
