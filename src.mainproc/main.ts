@@ -37,9 +37,15 @@ app.on('ready', function() {
             }
             if (filePath.match(/^[A-Za-z]:\/(css|img|js)/)) {
                 filePath = path.join(app.getAppPath(), 'dist', filePath.slice(3));
+            } else if (filePath.match(/^[A-Za-z]:\/[^/\\]+?\.(js|css|png|jpeg|jpg|ico|svg)$/)) {
+                // case of "vue-cli-service build --mode development"
+                filePath = path.join(app.getAppPath(), 'dist', filePath.slice(3));
             }
         } else {
             if (filePath.match(/^\/(css|img|js)/)) {
+                filePath = path.join(app.getAppPath(), 'dist', filePath.slice(1));
+            } else if (filePath.match(/^\/[^/\\]+?\.(js|css|png|jpeg|jpg|ico|svg)$/)) {
+                // case of "vue-cli-service build --mode development"
                 filePath = path.join(app.getAppPath(), 'dist', filePath.slice(1));
             }
         }

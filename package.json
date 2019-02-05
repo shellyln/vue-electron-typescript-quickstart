@@ -12,6 +12,7 @@
     "dist": "electron-builder -c electron-builder.yml",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build --mode development",
     "build:mainproc": "webpack-cli --mode=development --config webpack.mainproc.config.js",
     "clean": "rm -rf ./dist && rm -rf ./bin && rm -rf ./dist.electron",
     "lint": "vue-cli-service lint",
