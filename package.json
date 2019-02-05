@@ -1,6 +1,6 @@
 {
   "name": "vue-electron-typescript-quickstart",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": false,
   "description": "A boilerplate of Electron app that uses Vue in TypeScript.",
   "keywords": [
