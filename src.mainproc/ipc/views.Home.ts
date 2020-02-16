@@ -12,6 +12,7 @@ ipcMain.on('views:Home:message-foo', (event: any, arg: any) => {
     switch (arg) {
     case 'ping':
         createSubWindow();
+        // TODO: BUG: MainWindow and SubWindow's devtools can't open by CSP if UserContentWindow is created.
         createUserContentWindow();
         break;
     }

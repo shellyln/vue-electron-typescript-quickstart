@@ -25,14 +25,27 @@ export function createSubWindow() {
 
     // CSP is not work while the location scheme is 'file'.
     // And when if navigated to http/https, CSP is to be enabled.
-    subWindow.webContents.session.webRequest.onHeadersReceived((details: any, callback: any) => {
-        callback({
-            responseHeaders: {
-                ...details.responseHeaders,
-                'Content-Security-Policy': ['default-src \'none\''],
-            },
+    if (app.isPackaged) {
+        subWindow.webContents.session.webRequest.onHeadersReceived((details: any, callback: any) => {
+            callback({
+                responseHeaders: {
+                    ...details.responseHeaders,
+                    'Content-Security-Policy': ['default-src \'none\''],
+                },
+            });
         });
-    });
+    } else {
+        // NOTE: Remove CSP to use devtools.
+        //   Refused to load the script 'devtools://devtools/bundled/shell.js'
+        //   because it violates the following Content Security Policy directive: "default-src 'none'.
+        subWindow.webContents.session.webRequest.onHeadersReceived((details: any, callback: any) => {
+            callback({
+                responseHeaders: {
+                    ...details.responseHeaders,
+                },
+            });
+        });
+    }
 
     subWindow.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
         // const url = webContents.getURL();
