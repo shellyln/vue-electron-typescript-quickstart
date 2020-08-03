@@ -2,7 +2,7 @@
 // Modules to control application life and create native browser window
 import * as url from 'url';
 import * as path from 'path';
-import { app, protocol } from 'electron';
+import { app, protocol, Menu } from 'electron';
 
 
 // Window
@@ -20,6 +20,12 @@ import './ipc/views.Home';
 // Read the application config.
 // tslint:disable-next-line:no-console
 console.log('app config: ' + JSON.stringify(appConfig, null, 2));
+
+
+if (app.isPackaged) {
+    // Removing the menu bar from the window.
+    Menu.setApplicationMenu(null);
+}
 
 
 // App lifecycle events.
