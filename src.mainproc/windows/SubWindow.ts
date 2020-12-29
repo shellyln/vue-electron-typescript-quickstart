@@ -12,8 +12,12 @@ export function createSubWindow() {
     // Create the browser window.
     let subWindow: BrowserWindow | null = new BrowserWindow({
         webPreferences: {
-            nodeIntegration: false,
-            preload: path.join(app.getAppPath(), 'src.preload/preload.js'),
+            nodeIntegration: false,             // Electron 11: default is false
+            nodeIntegrationInWorker: false,     // Electron 11: default is false
+            nodeIntegrationInSubFrames: false,  // Electron 11: default is false
+            enableRemoteModule: false,          // Electron 11: default is false
+            contextIsolation: true,
+            preload: path.join(app.getAppPath(), 'src.preload/preload-isolated.js'),
         },
         width: 800,
         height: 600,
@@ -27,10 +31,22 @@ export function createSubWindow() {
     // And when if navigated to http/https, CSP is to be enabled.
     if (app.isPackaged) {
         subWindow.webContents.session.webRequest.onHeadersReceived((details: any, callback: any) => {
+            const headers = {...details.responseHeaders};
+            for (const key of Object.keys(headers)) {
+                if (key.toLowerCase() === 'content-security-policy') {
+                    delete headers[key];
+                }
+                if (key.toLowerCase() === 'x-content-security-policy') {
+                    delete headers[key];
+                }
+            }
             callback({
                 responseHeaders: {
-                    ...details.responseHeaders,
-                    'Content-Security-Policy': ['default-src \'none\''],
+                    ...headers,
+                    'content-security-policy': [
+                        `default-src 'none';` +
+                        `frame-ancestors 'none';`,
+                    ],
                 },
             });
         });

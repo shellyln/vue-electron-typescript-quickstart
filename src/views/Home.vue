@@ -15,7 +15,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
 
 import { IpcRenderer } from 'electron';
-declare var ipcRenderer: IpcRenderer;
+declare var myAppApi: { ping: (value: string) => Promise<string> };
 
 @Component({
     components: {
@@ -28,10 +28,9 @@ export default class Home extends Vue {
     }
 
     public onButtonClick() {
-        ipcRenderer.send('views:Home:message-foo', 'ping');
-        ipcRenderer.once('views:Home:message-foo', (event: any, arg: any) => {
-            // tslint:disable-next-line:no-console
-            console.log(arg);
+        myAppApi.ping('ping').then((value) => {
+            // tslint:disable-next-line: no-console
+            console.log(value);
         });
     }
 }

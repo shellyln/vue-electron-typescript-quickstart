@@ -5,16 +5,16 @@ import { createUserContentWindow } from '../windows/UserContentWindow';
 
 
 
-ipcMain.on('views:Home:message-foo', (event: any, arg: any) => {
+ipcMain.handle('views:Home:message-foo', (event: any, message: string) => {
     // tslint:disable-next-line:no-console
-    console.log(arg);
+    console.log(message);
 
-    switch (arg) {
+    switch (message) {
     case 'ping':
         createSubWindow();
         // TODO: BUG: MainWindow and SubWindow's devtools can't open by CSP if UserContentWindow is created.
         createUserContentWindow();
         break;
     }
-    event.sender.send('views:Home:message-foo', 'pong');
+    return 'pong';
 });
