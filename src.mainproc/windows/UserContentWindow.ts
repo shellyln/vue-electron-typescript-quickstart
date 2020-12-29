@@ -20,7 +20,10 @@ export function createUserContentWindow() {
     // Create the browser window.
     let userContentWindow: BrowserWindow | null = new BrowserWindow({
         webPreferences: {
-            nodeIntegration: false,
+            nodeIntegration: false,             // Electron 11: default is false
+            nodeIntegrationInWorker: false,     // Electron 11: default is false
+            nodeIntegrationInSubFrames: false,  // Electron 11: default is false
+            enableRemoteModule: false,          // Electron 11: default is false
             contextIsolation: true,
             preload: path.join(app.getAppPath(), 'src.preload/preload-for-user-contents.js'),
         },
@@ -33,11 +36,25 @@ export function createUserContentWindow() {
     userContentWindow.loadURL('https://shellyln.github.io/');
 
     userContentWindow.webContents.session.webRequest.onHeadersReceived((details: any, callback: any) => {
+        const headers = {...details.responseHeaders};
+        for (const key of Object.keys(headers)) {
+            if (key.toLowerCase() === 'content-security-policy') {
+                delete headers[key];
+            }
+            if (key.toLowerCase() === 'x-content-security-policy') {
+                delete headers[key];
+            }
+        }
         callback({
             responseHeaders: {
-                ...details.responseHeaders,
-                // tslint:disable-next-line:max-line-length
-                'Content-Security-Policy': ['default-src \'self\'; style-src \'self\' \'unsafe-inline\'; img-src \'self\''],
+                ...headers,
+                'content-security-policy': [
+                    `default-src 'self';` +
+                    `script-src chrome: 'self'${app.isPackaged ? '' : ` devtools: 'unsafe-eval'`};` +
+                    `style-src chrome: 'self' 'unsafe-inline'${app.isPackaged ? '' : ` devtools:`};` +
+                    `img-src 'self';` +
+                    `frame-ancestors 'none';`,
+                ],
             },
         });
     });
